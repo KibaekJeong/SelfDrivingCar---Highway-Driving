@@ -17,7 +17,7 @@ The goals / steps of this projects are following:
 
 [//]: # (Image References)
 
-[image1]: ./output/output_img.jpg "output"
+[image1]: ./output/output_img.png "output"
 ---
 
 ## Basic Build Instructions
