@@ -43,8 +43,13 @@ sudo chmod u+x {simulator_file_name}
 
 2. There will be some latency between the simulator running and the path planner returning a path, with optimized code usually its not very long maybe just 1-3 time steps. During this delay the simulator will continue using points that it was last given, because of this its a good idea to store the last points you have used so you can have a smooth transition. previous_path_x, and previous_path_y can be helpful for this transition since they show the last points given to the simulator controller with the processed points already removed. You would either return a path that extends this previous path or make sure to create a new path that has a smooth transition with this last path.
 
+## Project Approach
+
+In order to successfully navigate through the highway, first approach is to make the car be able to follow the lane. Using the sparse map list of the highway, way points are provided to car to follow. Car is designed to drive each points per 0.02 seconds. We can create an equation describing following car movement by: N * 0.02 * velocity = distance, where N is number of points. Also, velocity in following project needs to be converted to mph from m/s. Therefore, 0.447 has been multiplied to velocity for conversion. After getting way points and letting the car be able to drive at desired velocity, which is close to speed limit(50mph), we need to consider interaction with traffic.
+There are two things that we need to do with traffic. First, self-driving car should not collide with another car. Second, car should pass another traffic when possible. Also, we should consider cars that change lane. In order to not collide with traffic, car is designed to decelerate when another vehicle is located ahead. Also, for better safety, when another car is located ahead and very close, it is designed to decelerate at a higher rate. When decelerated, it is designed to decelerate until cars velocity is slightly slower than the velocity of the car ahead. Next, when car is ahead, car changes lane to empty lane whenever possible. Car prioritize changing to left lane, as left most lane is overtaking lane. Lane is considered to be empty when there is no vehicle at anywhere 30m ahead and 25m behind the main car.
+
 ## Result
-Car was able to navigate through the highway without incident for longer than 10 Miles. However, car sometimes hit other cars when other cars change lane, specifically when the car is located close to main car and changes lane. Below is the image taken out from simulatior.
+Car was able to navigate through the highway without incident for longer than 10 Miles. However, car sometimes hit other cars when other cars change lane, specifically when the car is located close to main car and changes lane. Below is the image taken out from the simulator.
 
 ![alt text][image1]
 
